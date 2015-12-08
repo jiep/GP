@@ -72,13 +72,48 @@
 \section{Introducción}
 
 
+
 \section{Resolución de las cuestiones de evaluación}
+
+A continuación resolveremos las cuestiones de evaluación planteadas.
 
 \subsection{Cuestión 1}
 
+Una vez definido las funciones de coste y los límites de producción de energía, el problema de optimización queda de la siguiente manera:
 
+\begin{align*}
+\min & 0.0578082\log(x_1^{100}) + 0.0016517x_2^2 + 0.0412916x_3\\
+     & x_1 + x_2 + x_3 - 1000 = 0 \\
+     & 1 \leq x_1 \leq 700 \\
+     & 0 \leq x_2 \leq 500 \\
+     & 0 \leq x_3 \leq 500
+\end{align*}
 
 \subsection{Cuestión 2}
+
+Modificando de forma adecuada los valores de E1, E2, E3 y del vector ub, y resolviendo con Scilab tenemos que la solución del problema es la siguiente:
+
+\begin{verbatim}
+El coste óptimo del GW/hora (en miles de euros) es:   
+ 
+    50.000033  
+ 
+ Los MW/hora a producir por el primer calentador son:   
+ 
+    699.99988  
+ 
+ Los MW/hora a producir por el segundo calentador son:   
+ 
+    12.499822  
+ 
+ Los MW/hora a producir por el tercer calentador son:   
+ 
+    287.5003  
+\end{verbatim}
+
+\subsection{Cuestión 3}
+
+A tenor de los resultados devueltos por Scilab, tenemos que que el coste del GW/hora es de 50\,000 euros. Se deben producir 700 MW/hora del primer calentador, 12.5 MW/hora del segundo y 287.5 del tercer calentador.\\
 
 
 

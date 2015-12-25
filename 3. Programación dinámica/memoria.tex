@@ -23,6 +23,7 @@
 	\SetWatermarkColor{red}
 }{}
 \usepackage{booktabs}
+\usepackage{multirow}
 \usepackage{longtable}
 \usepackage{calc}
 \usepackage{array}
@@ -72,13 +73,135 @@
 \section{Introducción}
 
 
-\section{Resolución de las cuestiones de evaluación}
+\section{Resolución de las cuestión de evaluación}
 
-\subsection{Cuestión 1}
+% Etapa 2010
+\begin{table}[htbp!]
+\centering
+\caption{Etapa 2010}
+\label{tbl:etapa2010}
+\begin{tabular}{c|cccc|}
+\cline{2-5}
+\textbf{}                                            & \textbf{Estado} & \textbf{0} & \textbf{\begin{tabular}[c]{@{}c@{}}Coste \\ acumulado\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Instalación\\ óptima\end{tabular}} \\ \hline
+\multicolumn{1}{|c|}{\multirow{3}{*}{\textbf{2010}}} & \textbf{1000}   & 65         & 65                                                                  & 1000                                                                  \\
+\multicolumn{1}{|c|}{}                               & \textbf{2000}   & 115        & 115                                                                 & 2000                                                                  \\
+\multicolumn{1}{|c|}{}                               & \textbf{3000}   & 165        & 165                                                                 & 3000                                                                  \\ \hline
+\end{tabular}
+\end{table}
+ 
+
+% Etapa 2011
+\begin{table}[htbp!]
+\centering
+\caption{Etapa 2011}
+\label{tbl:etapa2011}
+\begin{tabular}{|ccccccc|}
+\hline
+\multicolumn{1}{|l}{}                                & \multicolumn{1}{l|}{} & \multicolumn{3}{c|}{\textbf{2010}}            & \multicolumn{1}{l}{}                                                & \multicolumn{1}{l|}{}                                                 \\ \hline
+\multicolumn{1}{|c|}{\multirow{6}{*}{\textbf{2011}}} & \textbf{Estado}       & \textbf{1000} & \textbf{2000} & \textbf{3000} & \textbf{\begin{tabular}[c]{@{}c@{}}Coste \\ acumulado\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Instalación\\ óptima\end{tabular}} \\ \cline{2-7} 
+\multicolumn{1}{|c|}{}                               & \textbf{2000}         & 135           & 115           & ---           & 115                                                                 & 0                                                                     \\
+\multicolumn{1}{|c|}{}                               & \textbf{3000}         & 190           & 185           & 165           & 165                                                                 & 0                                                                     \\
+\multicolumn{1}{|c|}{}                               & \textbf{4000}         & 245           & 240           & 235           & 235                                                                 & 1000                                                                  \\
+\multicolumn{1}{|c|}{}                               & \textbf{5000}         & ---           & 295           & 290           & 290                                                                 & 2000                                                                  \\
+\multicolumn{1}{|c|}{}                               & \textbf{6000}         & ---           & ---           & 295           & 345                                                                 & 3000                                                                  \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Etapa 2012
+\begin{table}[htbp!]
+\centering
+\caption{Etapa 2012}
+\label{tbl:etapa2012}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|ccccccccc|}
+\hline
+\multicolumn{1}{|l}{}                                & \multicolumn{1}{l|}{} & \multicolumn{5}{c|}{\textbf{2012}}                                            & \multicolumn{1}{l}{}                                                & \multicolumn{1}{l|}{}                                                 \\ \hline
+\multicolumn{1}{|c|}{\multirow{7}{*}{\textbf{2013}}} & \textbf{Estado}       & \textbf{2000} & \textbf{3000} & \textbf{4000} & \textbf{5000} & \textbf{6000} & \textbf{\begin{tabular}[c]{@{}c@{}}Coste \\ acumulado\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Instalación\\ óptima\end{tabular}} \\ \cline{2-9} 
+\multicolumn{1}{|c|}{}                               & \textbf{4000}         & 250           & 240           & 235           & ---           & ---           & 235                                                                 & 0                                                                     \\
+\multicolumn{1}{|c|}{}                               & \textbf{5000}         & 310           & 300           & 310           & 290           & ---           & 290                                                                 & 0                                                                     \\
+\multicolumn{1}{|c|}{}                               & \textbf{6000}         & ---           & 360           & 370           & 365           & 345           & 345                                                                 & 0                                                                     \\
+\multicolumn{1}{|c|}{}                               & \textbf{7000}         & ---           & ---           & 430           & 425           & 420           & 420                                                                 & 1000                                                                  \\
+\multicolumn{1}{|c|}{}                               & \textbf{8000}         & ---           & ---           & ---           & 485           & 480           & 480                                                                 & 2000                                                                  \\
+\multicolumn{1}{|c|}{}                               & \textbf{9000}         & ---           & ---           & ---           & ---           & 540           & 540                                                                 & 2000                                                                  \\ \hline
+\end{tabular}
+}
+\end{table}
 
 
 
-\subsection{Cuestión 2}
+% Etapa 2013
+\begin{table}[htbp!]
+\centering
+\caption{Etapa 2013}
+\label{tbl:etapa2013}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|cccccccccc|}
+\hline
+\multicolumn{1}{|l}{}                                & \multicolumn{1}{l|}{} & \multicolumn{6}{c|}{\textbf{2012}}                                                            & \multicolumn{1}{l}{}                                                & \multicolumn{1}{l|}{}                                                 \\ \hline
+\multicolumn{1}{|c|}{\multirow{8}{*}{\textbf{2013}}} & \textbf{Estado}       & \textbf{4000} & \textbf{5000} & \textbf{6000} & \textbf{7000} & \textbf{8000} & \textbf{9000} & \textbf{\begin{tabular}[c]{@{}c@{}}Coste \\ acumulado\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Instalación\\ óptima\end{tabular}} \\ \cline{2-10} 
+\multicolumn{1}{|c|}{}                               & \textbf{6000}         & 380           & 370           & 345           & ---           & ---           & ---           & 345                                                                 & 0                                                                     \\
+\multicolumn{1}{|c|}{}                               & \textbf{7000}         & 445           & 435           & 425           & 420           & ---           & ---           & 420                                                                 & 0                                                                     \\
+\multicolumn{1}{|c|}{}                               & \textbf{8000}         & ---           & 500           & 490           & 500           & 480           & ---           & 480                                                                 & 0                                                                     \\
+\multicolumn{1}{|c|}{}                               & \textbf{9000}         & ---           & ---           & 555           & 565           & 560           & 540           & 540                                                                 & 0                                                                     \\
+\multicolumn{1}{|c|}{}                               & \textbf{10000}        & ---           & ---           & ---           & 630           & 625           & 620           & 620                                                                 & 1000                                                                  \\
+\multicolumn{1}{|c|}{}                               & \textbf{11000}        & ---           & ---           & ---           & ---           & 690           & 685           & 685                                                                 & 2000                                                                  \\
+\multicolumn{1}{|c|}{}                               & \textbf{12000}        & ---           & ---           & ---           & ---           & ---           & 750           & 750                                                                 & 3000                                                                  \\ \hline
+\end{tabular}
+}
+\end{table}
+
+
+
+% Etapa 2014
+\begin{table}[htbp!]
+\centering
+\caption{Etapa 2014}
+\label{tbl:etapa2014}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|ccccccccccc|}
+\hline
+\multicolumn{1}{|l}{}                                 & \multicolumn{1}{l|}{} & \multicolumn{7}{c|}{\textbf{2013}}                                                                               & \multicolumn{1}{l}{}                                                & \multicolumn{1}{l|}{}                                                 \\ \hline
+\multicolumn{1}{|c|}{\multirow{10}{*}{\textbf{2014}}} & \textbf{Estado}       & \textbf{6000} & \textbf{7000} & \textbf{8000} & \textbf{9000} & \textbf{10000} & \textbf{11000} & \textbf{12000} & \textbf{\begin{tabular}[c]{@{}c@{}}Coste \\ acumulado\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Instalación\\ óptima\end{tabular}} \\ \cline{2-11} 
+\multicolumn{1}{|c|}{}                                & \textbf{7000}         & 405           & 420           & ---           & ---           & ---            & ---            & ---            & 405                                                                 & 1000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{8000}         & 450           & 480           & 480           & ---           & ---            & ---            & ---            & 450                                                                 & 2000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{9000}         & 495           & 525           & 540           & 540           & ---            & ---            & ---            & 495                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{10000}        & ---           & 570           & 585           & 600           & 620            & ---            & ---            & 570                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{11000}        & ---           & ---           & 630           & 645           & 680            & 690            & ---            & 630                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{12000}        & ---           & ---           & ---           & 690           & 725            & 750            & 750            & 690                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{13000}        & ---           & ---           & ---           & ---           & 770            & 795            & 810            & 770                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{14000}        & ---           & ---           & ---           & ---           & ---            & 840            & 855            & 840                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{15000}        & ---           & ---           & ---           & ---           & ---            & ---            & 900            & 900                                                                 & 3000                                                                  \\ \hline
+\end{tabular}
+}
+\end{table}
+
+
+
+% Etapa 2015
+\begin{table}[htbp!]
+\centering
+\caption{Etapa 2015}
+\label{tbl:etapa2015}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|ccccccccccccc|}
+\hline
+\multicolumn{1}{|l}{}                                 & \multicolumn{1}{l|}{} & \multicolumn{9}{c|}{\textbf{2014}}                                                                                                                  & \multicolumn{1}{l}{}                                                & \multicolumn{1}{l|}{}                                                 \\ \hline
+\multicolumn{1}{|c|}{\multirow{12}{*}{\textbf{2015}}} & \textbf{Estado}       & \textbf{7000} & \textbf{8000} & \textbf{9000} & \textbf{10000} & \textbf{11000} & \textbf{12000} & \textbf{13000} & \textbf{14000} & \textbf{15000} & \textbf{\begin{tabular}[c]{@{}c@{}}Coste \\ acumulado\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Instalación\\ óptima\end{tabular}} \\ \cline{2-13} 
+\multicolumn{1}{|c|}{}                                & \textbf{8000}         & 460           & 450           & ---           & ---            & ---            & ---            & ---            & ---            & ---            & 450                                                                 & 0                                                                     \\
+\multicolumn{1}{|c|}{}                                & \textbf{9000}         & 500           & 505           & 495           & ---            & ---            & ---            & ---            & ---            & ---            & 495                                                                 & 0                                                                     \\
+\multicolumn{1}{|c|}{}                                & \textbf{10000}        & 540           & 545           & 550           & 570            & ---            & ---            & ---            & ---            & ---            & 540                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{11000}        & ---           & 585           & 590           & 625            & 630            & ---            & ---            & ---            & ---            & 585                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{12000}        & ---           & ---           & 630           & 665            & 685            & 690            & ---            & ---            & ---            & 630                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{13000}        & ---           & ---           & ---           & 705            & 725            & 745            & 770            & ---            & ---            & 705                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{14000}        & ---           & ---           & ---           & ---            & 765            & 785            & 825            & 840            & ---            & 765                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{15000}        & ---           & ---           & ---           & ---            & ---            & 825            & 865            & 895            & 900            & 825                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{16000}        & ---           & ---           & ---           & ---            & ---            & ---            & 905            & 935            & 955            & 905                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{17000}        & ---           & ---           & ---           & ---            & ---            & ---            & ---            & 975            & 995            & 975                                                                 & 3000                                                                  \\
+\multicolumn{1}{|c|}{}                                & \textbf{18000}        & ---           & ---           & ---           & ---            & ---            & ---            & ---            & ---            & 1035           & 1035                                                                & 3000                                                                  \\ \hline
+\end{tabular}
+}
+\end{table}
 
 
 

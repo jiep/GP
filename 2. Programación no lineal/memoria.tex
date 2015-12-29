@@ -71,7 +71,35 @@
 
 \section{Introducción}
 
+La empresa ELEKTRASA acaba de adquirir tres calentadores que conforman un nuevo generador de energía. Para cada calentador se conoce su función de coste, que son las siguientes:
 
+\begin{eqnarray*}
+C_1(x)  & =  0.07\log(x^{100}) \\
+C_2(x) & =  0.002x^2 \\
+C_3(x) & =  0.05x
+\end{eqnarray*}
+
+La variable $x$ determina la producción de cada calentador medida en Megavatios/hora. El coste $C_i(x)$ de cada calentador $i=1,2,3$ viene dado en miles de euros. El generador no puede producir más de 1\,000 MW/h. Cada calentador tiene unos límites (inferior y superior) de producción, los cuales son:
+
+\begin{eqnarray*}
+\text{Calentador 1: } & [1, 600] \\
+\text{Calentador 2: } & [0, 600] \\
+\text{Calentador 3: } & [0, 600]
+\end{eqnarray*}
+
+Se quiere minimizar el coste de generación de energía.\\
+
+El modelo a optimizar es el siguiente:
+
+\begin{align*}
+\mathrm{min} & 0.07\log(x_1^{100}) + 0.02^2 + 0.05x_3\\
+\text{s.a.}  & x_1 + x_2 + x_3 - 1000 = 0 \\
+             & 1 \leq x_1 \leq 600 \\
+             & 0 \leq x_2 \leq 600 \\
+             & 0 \leq x_3 \leq 600
+\end{align*}
+
+Resolviendo este problema se obtiene que el coste mínimo se consigue produciendo 600 MW con el primer calentador, 12.5 MW con el segundo y 387.5 MW con el tercero.
 
 \section{Resolución de las cuestiones de evaluación}
 
@@ -79,19 +107,23 @@ A continuación resolveremos las cuestiones de evaluación planteadas.
 
 \subsection{Cuestión 1}
 
-Una vez definido las funciones de coste y los límites de producción de energía, el problema de optimización queda de la siguiente manera:
+Una vez definidas las nuevas funciones de coste y los límites de producción de energía, el problema de optimización no lineal queda de la siguiente manera:
 
 \begin{align*}
-\min & 0.0578082\log(x_1^{100}) + 0.0016517x_2^2 + 0.0412916x_3\\
-     & x_1 + x_2 + x_3 - 1000 = 0 \\
-     & 1 \leq x_1 \leq 700 \\
-     & 0 \leq x_2 \leq 500 \\
-     & 0 \leq x_3 \leq 500
+\mathrm{min} & \ & 0.0578082\log(x_1^{100}) + 0.0016517x_2^2 + 0.0412916x_3\\
+\text{s.a.} & \  & x_1 + x_2 + x_3 - 1000 = 0 \\
+& \    & 1 \leq x_1 \leq 700 \\
+& \    & 0 \leq x_2 \leq 500 \\
+& \    & 0 \leq x_3 \leq 500
 \end{align*}
 
 \subsection{Cuestión 2}
 
-Modificando de forma adecuada los valores de E1, E2, E3 y del vector ub, y resolviendo con Scilab tenemos que la solución del problema es la siguiente:
+Modificamos de forma adecuada los valores de E1, E2, E3 y del vector ub, quedando de la siguiente manera:
+
+%\verbatiminput{programa-scilab/caso_interior.sce}
+
+ y resolviendo con Scilab tenemos que la solución del problema es la siguiente:
 
 \begin{verbatim}
 El coste óptimo del GW/hora (en miles de euros) es:   
@@ -113,7 +145,7 @@ El coste óptimo del GW/hora (en miles de euros) es:
 
 \subsection{Cuestión 3}
 
-A tenor de los resultados devueltos por Scilab, tenemos que que el coste del GW/hora es de 50\,000 euros. Se deben producir 700 MW/hora del primer calentador, 12.5 MW/hora del segundo y 287.5 del tercer calentador.\\
+A tenor de los resultados devueltos por Scilab, tenemos que que el coste del GW/hora es de 50\,000 euros. Se deben producir 700 MW/hora del primer calentador, 12.5 MW/hora del segundo y 287.5 del tercer calentador para minimizar la función de coste.\\
 
 
 

@@ -71,9 +71,59 @@
 \setcounter{page}{1}
 
 \section{Introducción}
+La empresa ELEKTRASA debe planificar la expansión de la generación de energía durante los próximos años. Sus ingenieros deben minimizar los costes totales, tanto fijos como variables de expansión del equipo generador para un alcance de varios años. Las decisiones a tomar son la potencia a instalar de cada tipo de generación en cada año del alcance del modelo. Se deben tener en cuenta ciertas restricciones en la expansión: potencia instalada inicial conocida, máxima potencia instalable, o número máximo de generadores instalables en cada año. Además, se deben considerar algunas restricciones como el balance entre generación y demanda de cada año. La demanda y el coste de inversión de cada año viene dado en la Tabla~\ref{tbl:costesporaño}.\\
+
+\begin{table}[htbp!]
+\centering
+\caption{Demanda y coste de inversión por generador por año}
+\label{tbl:costesporaño}
+\begin{tabular}{@{}ccc@{}}
+\toprule
+Año  & Demanda (MW) & \begin{tabular}[c]{@{}c@{}}Coste de inversión por generador de 1 GW\\ (euros/GW año)\end{tabular} \\ \midrule
+2010 & 1000         & 50                                                                                               \\
+2011 & 2000         & 55                                                                                               \\
+2012 & 4000         & 60                                                                                               \\
+2013 & 6000         & 65                                                                                               \\
+2014 & 7000         & 45                                                                                               \\
+2015 & 8000         & 40                                                                                               \\ \bottomrule
+\end{tabular}
+\end{table}
+
+Existe un coste adicional de 15 euros/año si se construye al menos un generador. No se pueden instalar más de 3000 MW de generación en ningún año y se parte de un sistema eléctrico sin ningún generador instalado.\\
+
+Haciendo uso de la programación dinámica hacia atrás se obtiene el resultado de la Tabla~\ref{tbl:resolucion_hacia_atras}.\\
 
 
-\section{Resolución de las cuestión de evaluación}
+\begin{table}[htbp!]
+\centering
+\caption{Resolución del problema mediante programación dinámica hacia atrás}
+\label{tbl:resolucion_hacia_atras}
+\begin{tabular}{@{}ccc@{}}
+\toprule
+Año            & Producción (MW) & Coste (euros) \\ \midrule
+2010           & 3000            & 165           \\
+2011           & 3000            & 180           \\
+2012           & 0               & 0             \\
+2013           & 0               & 0             \\
+2014           & 2000            & 105           \\
+2015           & 0               & 0             \\
+\textbf{TOTAL} & \textbf{8000}   & \textbf{450}  \\ \bottomrule
+\end{tabular}
+\end{table}
+
+Es decir, se deben aumentar en 8000 MW la potencia entre los años 2010 y 2015 (3000 MW en 2010 y 2011, y 2000 MW en 2014), teniendo un coste de 450 euros totales (165 euros en el año 2010, 180 en el 2011 y 105 en 2014).
+
+\section{Resolución de la cuestión de evaluación}
+
+A continuación resolveremos el mismo problema haciendo uso de la programación dinámica hacia delante.
+
+\subsection{Etapa 2010}
+
+En 2010 no tenemos ningún generador construido, por lo que los estados de la fila superior será sólo uno, 0, que indica que no tenemos ningún generador. Para satisfacer la demanda este año (1000 MW), tenemos 3 estados: 1000, 2000 y 3000 MW. No hay más estados porque no se pueden instalar más de 3000 MW en un año.\\
+
+Si en 2010 hubiera 1000 MW, el coste de pasar de 0 a 1000 MW sería de 65 euros (15 del coste fijo más 50 del coste de construir un generador --Tabla~\ref{tbl:costesporaño}--). Si en vez de 1000 MW hubiera 2000 MW tendríamos un coste de 115 euros (15 euros del coste fijo, más el coste de 2 generadores en el año 2010). De igual forma, si pasáramos de 0 a 3000 MW tendríamos un coste de 15 (coste fijo) + 3*50 (coste de 3 generadores en el año 2010) = 165 euros.\\
+
+Toda la información anterior se puede ver en la Tabla~\ref{tbl:etapa2010}.\\  
 
 % Etapa 2010
 \begin{table}[htbp!]
@@ -88,7 +138,23 @@
 \multicolumn{1}{|c|}{}                               & \textbf{3000}   & 165        & 165                                                                 & 3000                                                                  \\ \hline
 \end{tabular}
 \end{table}
- 
+
+
+\subsection{Etapa 2011} 
+
+Para satisfacer la demanda del año 2010 tenemos tres estados: 1000, 2000 y 3000 MW. Estos tres estados estarán en la fila superior de la tabla. Para satisfacer la demanda del año 2011, tenemos 5 estados posibles: 2000, 3000, 4000, 5000 y 6000 MW. Debido a la limitación de 3000 MW por año no hay más estados posibles. Notar, además, que todos los estados no serán válidos: debido a sobrepasar los 3000 MW de un año o por quitar potencia.\\
+
+Si pasáramos de 1000 MW (del año 2010) a 2000 MW tendríamos un coste de 15 euros (coste fijo) + 55 euros (coste de construcción de un generador en el año 2011 de acuerdo a la Tabla~\ref{tbl:costesporaño}) + 65 (coste de pasar a 1000 MW en la etapa 2010) = 135 euros.\\
+
+Si mantuviéramos los 2000 MW en el año 2011, tendríamos sólo el coste de la etapa 2010, es decir, 115 euros.\\
+
+Si pasáramos de 3000 MW a 2000 MW, no lo contemplamos puesto que el modelo no indica cómo eliminar generadores ni su coste asociado.
+
+Así pues el coste mínimo es el mínimo entre 115 y 135 es 115, por lo que la instalación óptima es de 0 MW.\\
+
+Si pasáramos de 1000 MW a 3000 MW en el año 2011, tendríamos un coste de 15 (coste fijo) + 2*55 (coste de instalar dos generadores en el año 2011) + 65 (coste de la etapa 2010) = 190 euros. Si pasáramos de 2000 a 3000 MW tendríamos un coste de 15 (coste fijo) + 55 (coste de un generador) + 115 (coste de la etapa anterior) = 185 euros. Si mantuviéramos los 3000 MW en el año 2011, sólo tendríamos el coste de la etapa anterior 165. El mínimo entre 190, 185 y 165 es 165, por lo que la instalación óptima para este año es de 0 MW.\\
+
+De igual forma se obtienen los estados restantes (Tabla~\ref{tbl:etapa2011}). Notar que los estados que no cumplen alguna restricción (más de 3000 MW de incremento en un año, o eliminación de potencia) aparecen marcados con ``---''. En la parte superior derecha aparecen los que eliminan potencia, y en la parte inferior izquierda los que superan el incremento de 3000 MW anuales.\\  
 
 % Etapa 2011
 \begin{table}[htbp!]
@@ -107,6 +173,15 @@
 \end{tabular}
 \end{table}
 
+\subsection{Etapa 2012}
+
+En el año 2011 teníamos cinco estados posibles: 2000, 3000, 4000, 5000 ó 6000 MW. Estos estados los colocamos en la fila superior de la tabla. Para satisfacer la demanda del año 2012, tenemos seis estados posibles: 4000, 5000, 6000, 7000, 8000 ó 9000 MW. Notar que todos los estados no podrán ser calculados por no cumplir las restricciones.\\
+
+Si pasáramos de 2000 MW de 4000 MW tendríamos un coste de 15 (coste fijo por la construcción de algún generador) + 2*60 (coste de instalación de dos generadores en el año 2012 de acuerdo a la Tabla~\ref{tbl:costesporaño}) + 115 (coste de la etapa anterior) = 250 euros. Si pasáramos de 3000 a 4000 MW tendríamos un coste de 15 (coste fijo) + 1*60 (coste de la instalación de un generador) + 165 (coste de la etapa anterior) = 240 euros. Si mantuviéramos los 4000 MW en el año 2012, sólo tendríamos el coste de la etapa anterior, es decir, 235 euros. Notar que no podemos eliminar potencia, por lo que pasar de 5000 a 4000 MW y de 6000 a 4000 MW no los consideraremos. El mínimo entre 250, 240 y 235 es 235, por lo que la instalación óptima es es de 0 MW.\\
+
+Si pasáramos de 2000 a 5000 MW tendríamos un coste de 15 (coste fijo) + 3*60 (coste de instalación de tres generadores) + 115 (coste de la etapa anterior) = 310 euros. Si pasáramos de 3000 a 5000 MW tendríamos un coste de 15 (coste fijo por la instalación de un nuevo generador) + 2*60 (coste de la instalación de dos generadores) + 165 (coste de la etapa anterior) = 300 euros. Si pasáramos de 4000 a 5000 MW tendríamos un coste de 15 (coste fijo) + 1*60 (coste de instalación de un generador) + 235 (coste de la etapa anterior) = 310 euros. Si mantuviéramos los 5000 MW del año 2011, sólo tendríamos el coste de la etapa anterior, es decir, 290 euros. Notar que no podemos pasar de 6000 a 5000 MW, por lo que este caso no lo consideramos. El mínimo entre 310, 300 y 290 es 290, por lo que la instalación óptima es de instalar 0 MW.\\
+
+De igual forma se obtienen las filas restantes (Tabla~\ref{tbl:etapa2012}).\\
 
 % Etapa 2012
 \begin{table}[htbp!]
@@ -129,6 +204,15 @@
 \end{table}
 
 
+\subsection{Etapa 2013}
+
+En la etapa anterior teníamos seis estados: 4000, 5000, 6000, 7000, 8000 ó 9000 MW. Estos estados irán en la fila superior de la tabla. Para cumplir la demanda para el año 2013 los estados serán siete: 6000, 7000, 8000, 9000, 10000, 11000 y 12000. Notar que todos los estados no serán calculables debido a nuestras restricciones.\\
+
+Si pasáramos de 4000 a 7000 MW en el año 2013, tendríamos un coste de 15 (coste fijo por la instalación de algún generador) + 2*65 (coste de la instalación de dos generadores en el año 2013 de acuerdo a la Tabla~\ref{tbl:costesporaño}) + 235 (coste de la etapa anterior) = 380 euros. Si pasáramos de 5000 a 6000 MW, tendríamos un coste de 15 (coste de la instalación de algún generador) + 1*65 (coste de la instalación de un generador) + 290 (coste de la etapa anterior) = 370 euros. Si mantuviéramos los 6000 MW del año 2012, sólo tendríamos el coste de la etapa anterior, por lo que el coste es 345 euros. Notar que no es posible pasar de 7000, 8000 ó 9000 a 6000 MW, por lo que estos estados no los consideraremos. El mínimo entre 380, 370 y 345 es 345, por lo que la instalación óptima es de 0 MW.\\
+
+Si pasáramos de 4000 a 7000 MW tendríamos un coste de 15 (coste fijo por la instalación de algún generador) + 3*65 (coste de la instalación de tres generadores) + 235 (coste de la etapa anterior) = 445 euros. Si pasáramos de 5000 a 7000 MW tendríamos un coste de 15 (coste fijo) + 2*65 (coste de instalación de dos generadores) + 290 (coste de la etapa anterior) = 435 euros. Si pasáramos de 6000 a 7000 MW tendríamos un coste de 15 (coste fijo) + 1*65 (coste de instalación de un generador) + 345 (coste de la etapa anterior) = 425 euros. Si mantuviéramos los 7000 MW de la etapa anterior, sólo tendríamos el coste de la etapa 2012, es decir, 420 euros. No consideraremos pasar de 8000 ó 9000 MW a 7000 MW ya que no se dice cómo se quita la potencia ni cuál es el coste asociado. El mínimo entre 445, 435, 425, 420 es 420, por lo que la instalación óptima es la de instalar 0 MW de potencia.\\
+
+Las filas restantes se consiguen de forma similar (Tabla~\ref{tbl:etapa2013}).\\ 
 
 % Etapa 2013
 \begin{table}[htbp!]
@@ -152,6 +236,16 @@
 \end{table}
 
 
+
+\subsection{Etapa 2014}
+
+En la etapa 2013 teníamos siete estados: 6000, 7000, 8000, 9000, 10000, 11000, 12000. Estos estados irán en la fila superior de la tabla. En la etapa 2014 tendremos nueve estados para satisfacer la demanda: 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000, 15000. Todos los estados no serán posibles de calcular, ya que alguno no cumplirá las restricciones.\\
+
+Si pasáramos de 6000 a 7000 MW tendríamos un coste de 15 (coste fijo por instalar algún generador) + 1*45 (coste de instalar un generador en 2014 de acuerdo a la Tabla~\ref{tbl:costesporaño}) + 345 (coste de la etapa anterior) = 405 euros. Si mantuviéramos los 7000 MW del año 2013, sólo tendríamos el coste de la etapa anterior, es decir, 420 euros. Notar que no es posible pasar de 8000--12000 MW a sólo 7000 MW, por lo que estos estados no son calculables. El mínimo entre 405 y 420 es 405, por lo que la instalación óptima será de 1000 MW.\\
+
+Si pasáramos de 6000 a 8000 MW tendríamos un coste de 15 (coste fijo) + 2*45 (coste de la instalación de dos generadores en el año 2014) + 345 (coste de la etapa anterior) = 450 euros. Si pasáramos de 7000 a  8000 MW tendríamos un coste de 15 (coste fijo) + 1*45 (coste de instalación de un generador) + 420 (coste de la etapa anterior) = 480 euros. Si mantuviéramos los 8000 MW del año 2013, sólo tendríamos los costes de la etapa anterior, es decir, 480 euros. Notar que no es posible reducir la potencia de 9000--12000 MW a 8000 MW. El mínimo entre 450 y 480 es 450, por lo que la instalación óptima es 2000 MW.\\
+
+El resto de filas se obtiene de manera similar (Tabla~\ref{tbl:etapa2014}).\\
 
 % Etapa 2014
 \begin{table}[htbp!]
@@ -178,6 +272,16 @@
 
 
 
+\subsection{Etapa 2015}
+
+En la etapa 2014 teníamos 9 estados: desde 7000 MW a 15000 MW, en cuantos de 1000 MW, que irán en la fila superior de la tabla. Para satisfacer la demanda del año 2015 tendremos 11 estados: desde 8000 MW hasta 18000 MW, de 1000 en 1000 MW.\\
+
+Si pasáramos de 7000 a 8000 MW tendríamos un coste de 15 (coste fijo de instalar algún generador) + 1*40 (coste de instalar un generador en 2015 de acuerdo a la Tabla~\ref{tbl:costesporaño}) + 405 (coste de la etapa anterior) = 460 euros. Si mantuviéramos los 8000 MW del año 2014, sólo tendríamos los costes de la etapa anterior, es decir, 450. Notar que no es posible reducir la potencia, por lo que los estados restantes no los consideraremos. Así, el mínimo entre 450 y 460 es 450, por lo que la instalación óptima es de 0 MW.\\
+
+Si pasáramos de 7000 a 9000 MW tendríamos un coste de 15 (coste fijo) + 2*40 (coste de instalar dos generadores en el año 2015) + 405 (coste de la etapa anterior). Si pasáramos de 8000 a 9000 MW tendríamos un coste de 15 (coste fijo) + 1*40 (coste de instalar un generador) + 450 (coste de la etapa anterior) = 505 euros. Si mantuviéramos los 9000 MW del año anterior, tendríamos sólo el coste de la etapa anterior, es decir, 495 euros. Todos los demás estados no son calculables debido a que no se puede reducir la potencia. El mínimo entre 500, 505 y 495 es 495, por lo que la instalación óptima es de 0 MW.\\
+
+El resto de las filas se obtienen de forma análoga (Tabla~\ref{tbl:etapa2015}).\\
+
 % Etapa 2015
 \begin{table}[htbp!]
 \centering
@@ -203,7 +307,24 @@
 }
 \end{table}
 
+Para ver la solución tenemos 
 
+
+\begin{table}[htbp!]
+\centering
+\caption{Solución del problema mediante programación dinámica hacia adelante}
+\label{tbl:solucion_haciaadelante}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+Año  & \begin{tabular}[c]{@{}c@{}}Producción\\ acumulada (MW)\end{tabular} & Producción (MW) & \begin{tabular}[c]{@{}c@{}}Coste \\ acumulado (euros)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Coste \\ etapa (euros)\end{tabular} \\ \midrule
+2015 & 8000                                                                & 0               & 450                                                                & 0                                                              \\
+2014 & 8000                                                                & 2000            & 450                                                                & 105                                                            \\
+2013 & 6000                                                                & 0               & 345                                                                & 0                                                              \\
+2012 & 6000                                                                & 0               & 345                                                                & 0                                                              \\
+2011 & 6000                                                                & 3000            & 345                                                                & 180                                                            \\
+2010 & 3000                                                                & 3000            & 165                                                                & 165                                                            \\ \bottomrule
+\end{tabular}
+\end{table}
 
 \section{Conclusiones}
 

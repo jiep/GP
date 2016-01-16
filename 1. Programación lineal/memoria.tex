@@ -273,9 +273,114 @@ En los dos casos anteriores tenemos la misma cantidad de aceites, 547 toneladas,
 
 \subsection{Objetivo 3}
 
-Modificamos el modelo anterior, introduciendo las nuevas restricciones del modelo.
+Modificamos el modelo anterior, introduciendo las nuevas restricciones del modelo.\\
+
+En primer lugar comenzamos definiendo unas nuevas variables de decisión, aunque en este caso serán binarias.
+
+\[ \delta_i = \begin{cases}
+1, & \text{ si el aceite } i \text{ está presente en la mezcla}\\
+0, & \text{en caso contario}
+\end{cases}, \quad i = 1,\dots,6 \]
+
+Si nos obligan a comprar un mínimo de 15 toneladas de cada tipo de aceite seleccionado en la mezcla tendremos la siguientes restricciones:
+
+\begin{align*}
+15\delta_i \leq \tilde{x}_i \leq 225\delta_i, \quad i =1,2,3\\
+15\delta_i \leq \tilde{x}_i \leq 350\delta_i, \quad i =4,5,6
+\end{align*}
+
+Es decir, por un lado, se debe cumplir que la cantidad de aceite debe ser mayor de 15, y por el otro, que sea menor que la cantidad menor que la cantidad que se puede refinar. Además, incluimos a ambos lados la variable binaria para, que en el caso, de que valga 0, automáticamente $\tilde{x}$ valga también 0.\\
+
+Si la mezcla final sólo puede tener tres aceites, la restricción queda de la siguiente forma:
+
+\[ \sum_{i=1}^{6} \delta_i \leq 3 \]
+
+Es decir, la presencia de los aceites sólo puede ser como máximo de 3, que se consigue sumando el valor de cada variable binaria $\delta_i$.\\
+
+Por último, si la mezcla contiene algún tipo de aceite vegetal, no puede contener aceite OIL3. Esta restricción se puede obtener de dos manera: con tres restricciones o con una sola.
+
+\[ \delta_1 + \delta_2 + \delta_3 \leq 3(1-\delta_6) \iff \begin{cases}
+\begin{array}{ccc}
+\delta_1 & \leq & 1-\delta_6 \\
+\delta_2 & \leq & 1-\delta_6 \\
+\delta_3 & \leq & 1-\delta_6 \\
+\end{array}
+\end{cases} \]
+
+El nuevo modelo queda de la siguiente manera:
+
+\begin{align*}
+\max & \text{ beneficios} = \text{ingresos} - \text{costes\_producción} - \text{costes\_refinado}\\
+\text{s.a} & \text{\ } x_i = 0.95\tilde{x}_i \ \forall i = 1, \dots, 6 \\
+& \text{producto} = \sum_{i=1}^{6} x_i \ \forall i = 1, \dots, 6 \\
+&\text{producto\_sin\_refinar} = \sum_{i=1}^{6} \tilde{x}_i \ \forall i = 1, \dots, 6\\
+&\text{costes\_producción} = 115\tilde{x}_1 + 120\tilde{x}_2 + 115\tilde{x}_3 + 120\tilde{x}_4 + 114\tilde{x}_5 + 115\tilde{x}_6 \\
+&\text{costes\_refinado} = 5\text{producto\_sin\_refinar} \\
+& 3 \leq \dfrac{8.8x_1 + 6.1x_2 + 7.5x_3 + 2x_4 + 5.2x_5 + 4.9x_6}{x_1 + x_2 + x_3 + x_4 + x_5 + x_6} \leq 6\\
+&\tilde{x}_1 + \tilde{x}_2 + \tilde{x}_3 \leq 225\\
+&\tilde{x}_4 + \tilde{x}_5 + \tilde{x}_6 \leq 350\\
+&15\delta_i \leq \tilde{x}_i \leq 225\delta_i, \quad i =1,2,3\\
+&15\delta_i \leq \tilde{x}_i \leq 350\delta_i, \quad i =4,5,6 \\
+&\sum_{i=1}^{6} \delta_i \leq 3\\
+&\delta_1 + \delta_2 + \delta_3 \leq 3(1-\delta_6)\\
+&\tilde{x}_i, x_i \geq 0 \ \forall i=1,...,6
+\end{align*}
+
+Si resolvemos este nuevo modelo con GAMS, se obtiene la siguiente solución:
+
+\begin{verbatim}
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR X1                  .              .            +INF             .          
+---- VAR X2                  .              .            +INF             .          
+---- VAR X3                  .           213.7500        +INF             .          
+---- VAR X4                  .            17.0703        +INF             .          
+---- VAR X5                  .           315.4297        +INF             .          
+---- VAR X6                  .              .            +INF             .          
+---- VAR X_1                 .              .            +INF             .          
+---- VAR X_2                 .              .            +INF             .          
+---- VAR X_3                 .           225.0000        +INF             .          
+---- VAR X_4                 .            17.9688        +INF             .          
+---- VAR X_5                 .           332.0312        +INF             .          
+---- VAR X_6                 .              .            +INF           -0.4375      
+---- VAR BENEFICIOS        -INF        13179.6875        +INF             .          
+---- VAR INGRESOS          -INF        81937.5000        +INF             .          
+---- VAR COSTES_PR~        -INF        65882.8125        +INF             .          
+---- VAR COSTES_RE~        -INF         2875.0000        +INF             .          
+---- VAR PRODUCTO          -INF          546.2500        +INF             .          
+---- VAR PRODUCTO_~        -INF          575.0000        +INF             .          
+---- VAR DELTA1              .              .             1.0000      3881.2500      
+---- VAR DELTA2              .              .             1.0000      3895.3125      
+---- VAR DELTA3              .             1.0000         1.0000      4429.6875      
+---- VAR DELTA4              .             1.0000         1.0000         EPS         
+---- VAR DELTA5              .             1.0000         1.0000         EPS         
+---- VAR DELTA6              .              .             1.0000         EPS         
+\end{verbatim}
+
+En este caso, se obtiene como solución que la cantidad óptima de aceite refinado es de 546.75 toneladas (213.75 de VEG3, 17.0703 de OIL1 y 315.4297 de OIL2), obteniendo unos beneficios de 13179.69 euros (81937.50 euros en ingresos, 65882.81 euros en costes de producción y 2875 euros en costes de refinado).\\
+
+Comprobemos que si la solución obtenida es óptima. Comprobamos de nuevo el resumen de GAMS, que es el siguiente:
+
+\begin{verbatim}
+               S O L V E      S U M M A R Y
+
+     MODEL   LINEAL              OBJECTIVE  BENEFICIOS
+     TYPE    MIP                 DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  76
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE            13179.6875
+
+ RESOURCE USAGE, LIMIT          0.019      1000.000
+ ITERATION COUNT, LIMIT         9    2000000000
+\end{verbatim}
 
 \subsection{Objetivo 4}
+
+Modificamos el modelo anterior para añadir las nuevas restricciones.\\
+
+
 
 \section{Conclusiones}
 

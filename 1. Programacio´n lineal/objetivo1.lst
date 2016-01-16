@@ -1,0 +1,429 @@
+GAMS 24.5.6  r55090 Released Nov 27, 2015 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    01/16/16 16:24:29 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  VARIABLES
+   2            X1, X2, X3, X4, X5, X6
+   3            X_1, X_2, X_3, X_4, X_5, X_6
+   4            BENEFICIOS
+   5            INGRESOS
+   6            COSTES_PRODUCCION
+   7            COSTES_REFINADO
+   8            PRODUCTO
+   9            PRODUCTO_SIN_REFINAR
+  10   
+  11  POSITIVE VARIABLES
+  12  X1, X2, X3, X4, X5, X6, X_1, X_2, X_3, X_4, X_5, X_6;
+  13   
+  14  EQUATIONS
+  15  OBJ, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R_PRODUCTO, R_PRODUCTO_SIN_REFINAR, R_INGRESOS, R_COSTES_PRODUCCION, R_COSTES_REFINADO;
+  16   
+  17   
+  18  R1..  X1 =E= 0.95*X_1;
+  19  R2..  X2 =E= 0.95*X_2;
+  20  R3..  X3 =E= 0.95*X_3;
+  21  R4..  X4 =E= 0.95*X_4;
+  22  R5..  X5 =E= 0.95*X_5;
+  23  R6..  X6 =E= 0.95*X_6;
+  24   
+  25   
+  26  R_PRODUCTO..               PRODUCTO =E= X1 + X2 + X3 + X4 + X5 + X6;
+  27  R_PRODUCTO_SIN_REFINAR..   PRODUCTO_SIN_REFINAR =E= X_1 + X_2 + X_3 + X_4 + X_5 + X_6;
+  28  R_INGRESOS..               INGRESOS =E= 150*PRODUCTO;
+  29  R_COSTES_PRODUCCION..      COSTES_PRODUCCION =E= 115*X_1 + 120*X_2 + 115*X_3 + 120*X_4 + 114*X_5 + 115*X_6;
+  30  R_COSTES_REFINADO..        COSTES_REFINADO =E= 5*PRODUCTO_SIN_REFINAR;
+  31   
+  32  R7..  8.8*X1+6.1*X2+7.5*X3+2*X4+5.2*X5+4.9*X6 -3*PRODUCTO =G= 0;
+  33  R8..  8.8*X1+6.1*X2+7.5*X3+2*X4+5.2*X5+4.9*X6 -6*PRODUCTO =L= 0;
+  34  R9..  X_1 + X_2 + X_3 =L= 225;
+  35  R10.. X_4 + X_5 + X_6 =L= 350;
+  36   
+  37  OBJ.. BENEFICIOS =E= INGRESOS - COSTES_PRODUCCION - COSTES_REFINADO
+  38   
+  39   
+  40  MODEL LINEAL /ALL/;
+  41  SOLVE LINEAL USING LP MAXIMIZING BENEFICIOS;
+
+
+COMPILATION TIME     =        0.002 SECONDS      2 MB  24.5.6 r55090 DEX-DEG
+GAMS 24.5.6  r55090 Released Nov 27, 2015 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    01/16/16 16:24:29 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE LINEAL Using LP From line 41
+
+
+---- OBJ  =E=  
+
+OBJ..  BENEFICIOS - INGRESOS + COSTES_PRODUCCION + COSTES_REFINADO =E= 0 ; (LHS = 0)
+     
+
+---- R1  =E=  
+
+R1..  X1 - 0.95*X_1 =E= 0 ; (LHS = 0)
+     
+
+---- R2  =E=  
+
+R2..  X2 - 0.95*X_2 =E= 0 ; (LHS = 0)
+     
+
+---- R3  =E=  
+
+R3..  X3 - 0.95*X_3 =E= 0 ; (LHS = 0)
+     
+
+---- R4  =E=  
+
+R4..  X4 - 0.95*X_4 =E= 0 ; (LHS = 0)
+     
+
+---- R5  =E=  
+
+R5..  X5 - 0.95*X_5 =E= 0 ; (LHS = 0)
+     
+
+---- R6  =E=  
+
+R6..  X6 - 0.95*X_6 =E= 0 ; (LHS = 0)
+     
+
+---- R7  =G=  
+
+R7..  8.8*X1 + 6.1*X2 + 7.5*X3 + 2*X4 + 5.2*X5 + 4.9*X6 - 3*PRODUCTO =G= 0 ; (LHS = 0)
+     
+
+---- R8  =L=  
+
+R8..  8.8*X1 + 6.1*X2 + 7.5*X3 + 2*X4 + 5.2*X5 + 4.9*X6 - 6*PRODUCTO =L= 0 ; (LHS = 0)
+     
+
+---- R9  =L=  
+
+R9..  X_1 + X_2 + X_3 =L= 225 ; (LHS = 0)
+     
+GAMS 24.5.6  r55090 Released Nov 27, 2015 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    01/16/16 16:24:29 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE LINEAL Using LP From line 41
+
+
+---- R10  =L=  
+
+R10..  X_4 + X_5 + X_6 =L= 350 ; (LHS = 0)
+     
+
+---- R_PRODUCTO  =E=  
+
+R_PRODUCTO..  - X1 - X2 - X3 - X4 - X5 - X6 + PRODUCTO =E= 0 ; (LHS = 0)
+     
+
+---- R_PRODUCTO_SIN_REFINAR  =E=  
+
+R_PRODUCTO_SIN_REFINAR..  - X_1 - X_2 - X_3 - X_4 - X_5 - X_6 + PRODUCTO_SIN_REFINAR =E= 0 ; (LHS = 0)
+     
+
+---- R_INGRESOS  =E=  
+
+R_INGRESOS..  INGRESOS - 150*PRODUCTO =E= 0 ; (LHS = 0)
+     
+
+---- R_COSTES_PRODUCCION  =E=  
+
+R_COSTES_PRODUCCION..  - 115*X_1 - 120*X_2 - 115*X_3 - 120*X_4 - 114*X_5 - 115*X_6 + COSTES_PRODUCCION =E= 0 ; (LHS = 0)
+     
+
+---- R_COSTES_REFINADO  =E=  
+
+R_COSTES_REFINADO..  COSTES_REFINADO - 5*PRODUCTO_SIN_REFINAR =E= 0 ; (LHS = 0)
+     
+GAMS 24.5.6  r55090 Released Nov 27, 2015 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    01/16/16 16:24:29 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE LINEAL Using LP From line 41
+
+
+---- X1  
+
+X1
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       R1
+        8.8     R7
+        8.8     R8
+       -1       R_PRODUCTO
+
+
+---- X2  
+
+X2
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       R2
+        6.1     R7
+        6.1     R8
+       -1       R_PRODUCTO
+
+
+---- X3  
+
+X3
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       R3
+        7.5     R7
+        7.5     R8
+       -1       R_PRODUCTO
+
+
+---- X4  
+
+X4
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       R4
+        2       R7
+        2       R8
+       -1       R_PRODUCTO
+
+
+---- X5  
+
+X5
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       R5
+        5.2     R7
+        5.2     R8
+       -1       R_PRODUCTO
+
+GAMS 24.5.6  r55090 Released Nov 27, 2015 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    01/16/16 16:24:29 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE LINEAL Using LP From line 41
+
+
+---- X6  
+
+X6
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       R6
+        4.9     R7
+        4.9     R8
+       -1       R_PRODUCTO
+
+
+---- X_1  
+
+X_1
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -0.95    R1
+        1       R9
+       -1       R_PRODUCTO_SIN_REFINAR
+     -115       R_COSTES_PRODUCCION
+
+
+---- X_2  
+
+X_2
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -0.95    R2
+        1       R9
+       -1       R_PRODUCTO_SIN_REFINAR
+     -120       R_COSTES_PRODUCCION
+
+
+---- X_3  
+
+X_3
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -0.95    R3
+        1       R9
+       -1       R_PRODUCTO_SIN_REFINAR
+     -115       R_COSTES_PRODUCCION
+
+
+---- X_4  
+
+X_4
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -0.95    R4
+        1       R10
+       -1       R_PRODUCTO_SIN_REFINAR
+     -120       R_COSTES_PRODUCCION
+
+GAMS 24.5.6  r55090 Released Nov 27, 2015 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    01/16/16 16:24:29 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE LINEAL Using LP From line 41
+
+
+---- X_5  
+
+X_5
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -0.95    R5
+        1       R10
+       -1       R_PRODUCTO_SIN_REFINAR
+     -114       R_COSTES_PRODUCCION
+
+
+---- X_6  
+
+X_6
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -0.95    R6
+        1       R10
+       -1       R_PRODUCTO_SIN_REFINAR
+     -115       R_COSTES_PRODUCCION
+
+
+---- BENEFICIOS  
+
+BENEFICIOS
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       OBJ
+
+
+---- INGRESOS  
+
+INGRESOS
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+       -1       OBJ
+        1       R_INGRESOS
+
+
+---- COSTES_PRODUCCION  
+
+COSTES_PRODUCCION
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       OBJ
+        1       R_COSTES_PRODUCCION
+
+
+---- COSTES_REFINADO  
+
+COSTES_REFINADO
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       OBJ
+        1       R_COSTES_REFINADO
+
+GAMS 24.5.6  r55090 Released Nov 27, 2015 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    01/16/16 16:24:29 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE LINEAL Using LP From line 41
+
+
+---- PRODUCTO  
+
+PRODUCTO
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+       -3       R7
+       -6       R8
+        1       R_PRODUCTO
+     -150       R_INGRESOS
+
+
+---- PRODUCTO_SIN_REFINAR  
+
+PRODUCTO_SIN_REFINAR
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       R_PRODUCTO_SIN_REFINAR
+       -5       R_COSTES_REFINADO
+
+GAMS 24.5.6  r55090 Released Nov 27, 2015 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    01/16/16 16:24:29 Page 8
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE LINEAL Using LP From line 41
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS          16     SINGLE EQUATIONS           16
+BLOCKS OF VARIABLES          18     SINGLE VARIABLES           18
+NON ZERO ELEMENTS            61
+
+
+GENERATION TIME      =        0.012 SECONDS      3 MB  24.5.6 r55090 DEX-DEG
+
+
+EXECUTION TIME       =        0.013 SECONDS      3 MB  24.5.6 r55090 DEX-DEG
+GAMS 24.5.6  r55090 Released Nov 27, 2015 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    01/16/16 16:24:29 Page 9
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE LINEAL Using LP From line 41
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   LINEAL              OBJECTIVE  BENEFICIOS
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  41
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE            13179.6875
+
+ RESOURCE USAGE, LIMIT          0.026      1000.000
+ ITERATION COUNT, LIMIT         4    2000000000
+
+IBM ILOG CPLEX   24.5.6 r55090 Released Nov 27, 2015 DEG x86 64bit/MacOS X    
+Cplex 12.6.2.0
+
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+LP status(1): optimal
+Cplex Time: 0.02sec (det. 0.03 ticks)
+Optimal solution found.
+Objective :       13179.687500
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU OBJ                 .              .              .             1.0000      
+---- EQU R1                  .              .              .           147.0395      
+---- EQU R2                  .              .              .           152.3026      
+---- EQU R3                  .              .              .           147.0395      
+---- EQU R4                  .              .              .           157.8947      
+---- EQU R5                  .              .              .           151.5789      
+---- EQU R6                  .              .              .           152.6316      
+---- EQU R7                  .          1638.7500        +INF             .          
+---- EQU R8                -INF             .              .             1.9737      
+---- EQU R9                -INF          225.0000       225.0000        19.6875      
+---- EQU R10               -INF          350.0000       350.0000        25.0000      
+---- EQU R_PRODUCTO          .              .              .           161.8421      
+---- EQU R_PRODUCT~          .              .              .            -5.0000      
+---- EQU R_INGRESOS          .              .              .             1.0000      
+---- EQU R_COSTES_~          .              .              .            -1.0000      
+---- EQU R_COSTES_~          .              .              .            -1.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR X1                  .              .            +INF           -2.5658      
+---- VAR X2                  .              .            +INF           -2.5000      
+---- VAR X3                  .           213.7500        +INF             .          
+---- VAR X4                  .            17.0703        +INF             .          
+---- VAR X5                  .           315.4297        +INF             .          
+---- VAR X6                  .              .            +INF           -0.4605      
+---- VAR X_1                 .              .            +INF             .          
+---- VAR X_2                 .              .            +INF             .          
+GAMS 24.5.6  r55090 Released Nov 27, 2015 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   01/16/16 16:24:29 Page 10
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE LINEAL Using LP From line 41
+
+
+---- VAR X_3                 .           225.0000        +INF             .          
+---- VAR X_4                 .            17.9688        +INF             .          
+---- VAR X_5                 .           332.0312        +INF             .          
+---- VAR X_6                 .              .            +INF             .          
+---- VAR BENEFICIOS        -INF        13179.6875        +INF             .          
+---- VAR INGRESOS          -INF        81937.5000        +INF             .          
+---- VAR COSTES_PR~        -INF        65882.8125        +INF             .          
+---- VAR COSTES_RE~        -INF         2875.0000        +INF             .          
+---- VAR PRODUCTO          -INF          546.2500        +INF             .          
+---- VAR PRODUCTO_~        -INF          575.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.003 SECONDS      2 MB  24.5.6 r55090 DEX-DEG
+
+
+USER: GAMS Development Corporation, Washington, DC   G871201/0000CA-ANY
+      Free Demo,  202-342-0180,  sales@gams.com,  www.gams.com   DC0000
+
+
+**** FILE SUMMARY
+
+Input      /Users/jiep12345/Desktop/objetivo1.gms
+Output     /Users/jiep12345/Desktop/objetivo1.lst

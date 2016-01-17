@@ -92,7 +92,7 @@ Se quiere minimizar el coste de generación de energía.\\
 El modelo a optimizar es el siguiente:
 
 \begin{eqnarray*}
-\mathrm{min} & 0.07\log(x_1^{100}) + 0.02^2 + 0.05x_3\\
+\mathrm{min} & 0.07\log(x_1^{100}) + 0.002x^2 + 0.05x_3\\
 \text{s.a.}  & x_1 + x_2 + x_3 - 1000 = 0 \\
              & 1 \leq x_1 \leq 600 \\
              & 0 \leq x_2 \leq 600 \\
@@ -163,7 +163,7 @@ Una comparación de las soluciones del modelo inicial y del mejorado se pueden v
 \label{tbl:comparacion}
 \begin{tabular}{@{}ccc@{}}
 \cmidrule(l){2-3}
-                                             & Modelo inicial & Modelo Mejorado \\ \cmidrule(l){2-3} 
+                                             & Modelo inicial & Modelo mejorado \\ \cmidrule(l){2-3} 
 Energía producida por el calentador 1 (MW/h) & 600            & 700             \\
 Energía producida por el calentador 2 (MW/h) & 12.5           & 12.5            \\
 Energía producida por el calentador 3 (MW/h) & 387.5          & 287.5           \\
@@ -182,7 +182,9 @@ Vemos que este nuevo modelo ha supuesto un ahorro de casi 14\,500 euros/hora. Ad
 
 \section{Conclusiones}
 
-En este caso práctico, hemos visto cómo utilizar Scilab para resolver un problema de programación no lineal.
+En este caso práctico hemos visto que la programación no lineal es ampliamente usada en distintos contextos, uno de ellos es la minimización del coste de producción de energía. Hemos visto que pequeños cambios en la función objetivo, producen grandes cambios en el mínimo del problema. En nuestro caso, hemos reducido casi 14500 euros, mejorando la función objetivo.\\
+
+El problema de programación no lineal lo hemos resuelto con Scilab de una forma muy rápida debido a la gran potencia de cálculo del lenguaje que lleva incorporado, permitiendo ahorrar una gran cantidad de tiempo.
 
 \clearpage
 

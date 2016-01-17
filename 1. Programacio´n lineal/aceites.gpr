@@ -3,16 +3,31 @@
 [RP:UNTITLED_1]
 1=
 
+[RP:MINA]
+1=
+
+[RP:CERVEZA]
+1=
+
 [RP:ACEITES]
 1=
 
+[RP:PETRO]
+1=
+
 [MRUFILES]
-1=C:\Users\jose\Documents\GitHub\GP\1. Programacio´n lineal\Untitled_1.gms
+1=C:\Users\jose\Documents\GitHub\GP\1. Programacio´n lineal\petro.lst
+2=C:\Users\jose\Desktop\Gestión y planificación\Otros recursos\ejemplos_gams\petro.gms
+3=C:\Users\jose\Desktop\Gestión y planificación\Otros recursos\ejemplos_gams\cerveza.gms
+4=C:\Users\jose\Desktop\Gestión y planificación\Otros recursos\ejemplos_gams\mina.gms
+5=C:\Users\jose\Documents\GitHub\GP\1. Programacio´n lineal\aceites.gms
+6=C:\Users\jose\Documents\GitHub\GP\1. Programacio´n lineal\aceites.lst
+7=C:\Users\jose\Documents\GitHub\GP\1. Programacio´n lineal\cerveza.lst
+8=C:\Users\jose\Documents\GitHub\GP\1. Programacio´n lineal\mina.lst
 
 [OPENWINDOW_1]
-FILE0=C:\Users\jose\Documents\GitHub\GP\1. Programacio´n lineal\aceites.gms
-FILE1=C:\Users\jose\Documents\GitHub\GP\1. Programacio´n lineal\aceites.lst
-FILE2=C:\Users\jose\Documents\GitHub\GP\1. Programacio´n lineal\aceites.gms
+FILE0=C:\Users\jose\Desktop\Gestión y planificación\Otros recursos\ejemplos_gams\aceites.gms
+FILE1=C:\Users\jose\Desktop\Gestión y planificación\Otros recursos\ejemplos_gams\aceites.gms
 MAXIM=1
 TOP=50
 LEFT=50

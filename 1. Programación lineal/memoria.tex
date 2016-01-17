@@ -53,14 +53,6 @@
 
 \portada{Caso Práctico I}{Gestión y planificación}{Programación lineal}{José Ignacio Escribano}{Móstoles}
 
-\listoffigures
-\thispagestyle{empty}
-\newpage
-
-\listoftables
-\thispagestyle{empty}
-\newpage
-
 \tableofcontents
 \thispagestyle{empty}
 \newpage
@@ -79,57 +71,57 @@ Para resolver el problema necesitamos definir nuestras variables de decisión. �
 
 \begin{align*}
 x_i & = \text{cantidad de aceite } i \text{ refinado (en toneladas)}, i=1,2,3,4,5,6 \\
-\tilde{x}_i & = \text{cantidad de aceite } i \text{sin refinar (en toneladas)}, i=1,2,3,4,5,6
+\tilde{x}_i & = \text{cantidad de aceite } i \text{ sin refinar (en toneladas)}, i=1,2,3,4,5,6
 \end{align*}
 
 Notar que tanto las variables $x_i$ como $\tilde{x}_i$ están relacionadas por la ecuación 
-\[x_i = 0.95\tilde{x}_i \]
+\[x_i = 0.95\tilde{x}_i, \quad i=1,\dots,6 \]
 Es decir, la cantidad de aceite $i$ refinada es igual al 95\% de la no refinada, o lo que es lo mismo, se pierde un 5\% de producto en el proceso de refinado.\\
  
-Al finalizar la mezcla, tendremos una cantidad, que llamaremos \texttt{producto}, que definimos de la siguiente manera:
+Al finalizar la mezcla, tendremos una cantidad, que llamaremos producto, que definimos de la siguiente manera:
 
-\[ \text{\texttt{producto}} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 \]
+\[ \text{producto} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 \]
 
 Es la cantidad de producto total, como suma de cada de las cantidades de cada aceite refinado.\\
 
-De forma análoga, definimos \texttt{producto\_sin\_refinar}, 
+De forma análoga, definimos {producto\_sin\_refinar}, 
 
-\[ \text{\texttt{producto\_sin\_refinar}} = 1.05\text{\texttt{producto}}\]
+\[ \text{producto\_sin\_refinar} = 1.05*\text{producto}\]
 
-Notar que el factor $1.05$ indica que el producto sin refinar es un 5\% del producto refinado.\\
+Notar que el factor $1.05$ indica que el producto sin refinar es un 5\% más que el producto refinado.\\
 
 También tenemos unos coste asociados: costes de producción y coste de refino. Los primeros vienen dados por la siguiente ecuación:
 
-\[ \text{\texttt{costes\_producción}} = \sum_{i=1}^{6} c_i x_i \]
+\[ \text{costes\_producción} = \sum_{i=1}^{6} c_i x_i \]
 
 donde $c_i$ el coste de producción del aceite $i$.\\
 
 Si sustituimos en la ecuación el coste de cada $c_i$ se tiene que
 
-\[ \text{\texttt{costes\_producción}} = 115\tilde{x}_1 + 120\tilde{x}_2 + 115\tilde{x}_3 + 120\tilde{x}_4 + 114\tilde{x}_5 + 115\tilde{x}_6 \]
+\[ \text{costes\_producción} = 115\tilde{x}_1 + 120\tilde{x}_2 + 115\tilde{x}_3 + 120\tilde{x}_4 + 114\tilde{x}_5 + 115\tilde{x}_6 \]
 
 Los costes de refinado vienen dados por la siguiente ecuación
 
-\[ \text{\texttt{costes\_refinado}} = 5*\text{\texttt{producto\_sin\_refinar}} \]
+\[ \text{costes\_refinado} = 5*\text{producto\_sin\_refinar} \]
 
 Es decir, supone un gasto de 5 euros por cada tonelada de producto sin refinar.\\
 
 La función objetivo será 
 
-\[ \text{\texttt{beneficios}} = \text{\texttt{ingresos}} - \text{\texttt{costes\_producción}} - \text{\texttt{costes\_refinado}} \]
+\[ \text{beneficios} = \text{ingresos} - \text{costes\_producción} - \text{costes\_refinado} \]
 
-donde \texttt{ingresos} vendrá dado por
+donde ingresos vendrá dado por
 
-\[ \text{\texttt{ingresos}} = 150*\text{\texttt{producto}} \]
+\[ \text{ingresos} = 150*\text{producto} \]
 
 Tenemos distintas restricciones en la capacidad de refinado, según sea la naturaleza del aceite. En el caso del aceite vegetal disponemos de de un máximo de 225 toneladas, y 350 toneladas en el caso de los aceites de origen animal.\\
 
 Matemáticamente, se tiene las ecuaciones siguientes
 
-\begin{align}
+\begin{align*}
 \tilde{x}_1 + \tilde{x}_2 + \tilde{x}_3 & \leq 225\\
 \tilde{x}_4 + \tilde{x}_5 + \tilde{x}_6 & \leq 350
-\end{align}
+\end{align*}
 
 Por último, tenemos la ecuación de la dureza, que debe estar comprendida entre 3 y 6 unidades. Viene dada como media ponderada de las durezas. Es decir,
 
@@ -164,26 +156,26 @@ Por tanto, el modelo queda de la siguiente manera:
 Usando GAMS para resolver el problema de programación lineal anterior, se tiene la siguiente salida\footnote{Notar que no es posible poner escribir las variables $\tilde{x}_i$ en GAMS, por lo que estas variables son del tipo X\_i}:
 
 \begin{verbatim}
-                           LOWER          LEVEL          UPPER         MARGINAL
+                           LOWER          LEVEL          UPPER        
 
----- VAR X1                  .              .            +INF           -2.5658      
----- VAR X2                  .              .            +INF           -2.5000      
----- VAR X3                  .           213.7500        +INF             .          
----- VAR X4                  .            17.0703        +INF             .          
----- VAR X5                  .           315.4297        +INF             .          
----- VAR X6                  .              .            +INF           -0.4605      
----- VAR X_1                 .              .            +INF             .          
----- VAR X_2                 .              .            +INF             .          
----- VAR X_3                 .           225.0000        +INF             .          
----- VAR X_4                 .            17.9688        +INF             .          
----- VAR X_5                 .           332.0312        +INF             .          
----- VAR X_6                 .              .            +INF             .          
----- VAR BENEFICIOS        -INF        13179.6875        +INF             .          
----- VAR INGRESOS          -INF        81937.5000        +INF             .          
----- VAR COSTES_PR~        -INF        65882.8125        +INF             .          
----- VAR COSTES_RE~        -INF         2875.0000        +INF             .          
----- VAR PRODUCTO          -INF          546.2500        +INF             .          
----- VAR PRODUCTO_~        -INF          575.0000        +INF             .          
+---- VAR X1                  .              .            +INF        
+---- VAR X2                  .              .            +INF        
+---- VAR X3                  .           213.7500        +INF         
+---- VAR X4                  .            17.0703        +INF           
+---- VAR X5                  .           315.4297        +INF             
+---- VAR X6                  .              .            +INF         
+---- VAR X_1                 .              .            +INF         
+---- VAR X_2                 .              .            +INF             
+---- VAR X_3                 .           225.0000        +INF       
+---- VAR X_4                 .            17.9688        +INF          
+---- VAR X_5                 .           332.0312        +INF      
+---- VAR X_6                 .              .            +INF           
+---- VAR BENEFICIOS        -INF        13179.6875        +INF           
+---- VAR INGRESOS          -INF        81937.5000        +INF         
+---- VAR COSTES_PR~        -INF        65882.8125        +INF           
+---- VAR COSTES_RE~        -INF         2875.0000        +INF          
+---- VAR PRODUCTO          -INF          546.2500        +INF    
+---- VAR PRODUCTO_~        -INF          575.0000        +INF          
 
      
 \end{verbatim}
@@ -192,7 +184,7 @@ Así pues, la mezcla óptima se consigue con 213.75 toneladas del aceite VEG3, 1
 
 En total, se debe producir un total de 546.25 toneladas de aceites no refinado, o 575 toneladas si no está refinado.\\
 
-Se obtienen un total de 81937.5 euros de ingresos, los costes de producción son de 65882.81 euros y los costes de refinado son de 2875 euros, haciendo que los beneficios sean de 13179.69 euros.
+Se obtienen un total de 81937.5 euros de ingresos, los costes de producción son de 65882.81 euros y los costes de refinado son de 2875 euros, haciendo que los beneficios sean de 13179.69 euros.\\
 
 Queda comprobar si la solución es óptima en el modelo planteado. Esto lo comprobamos en el sumario de la salida de GAMS. Es el siguiente:
 
@@ -213,33 +205,33 @@ Queda comprobar si la solución es óptima en el modelo planteado. Esto lo compr
 
 \end{verbatim}
 
-Observamos, que en efecto, la solución en óptima. Por lo que los 13179.69 euros obtenidos son el máximo beneficio que se puede obtener de acuerdo al modelo planteado.
+Observamos, que en efecto, la solución es óptima. Por lo que los 13179.69 euros obtenidos son el máximo beneficio que se puede obtener de acuerdo al modelo planteado.
 
 \subsection{Objetivo 2}
 
 Si aumentamos la capacidad con una tonelada adicional para refinar aceite vegetal, se obtiene la siguiente salida de GAMS:
 
 \begin{verbatim}
-                           LOWER          LEVEL          UPPER         MARGINAL
+                           LOWER          LEVEL          UPPER      
 
----- VAR X1                  .              .            +INF           -2.5658      
----- VAR X2                  .              .            +INF           -2.5000      
----- VAR X3                  .           214.7000        +INF             .          
----- VAR X4                  .            17.5156        +INF             .          
----- VAR X5                  .           314.9844        +INF             .          
----- VAR X6                  .              .            +INF           -0.4605      
----- VAR X_1                 .              .            +INF             .          
----- VAR X_2                 .              .            +INF             .          
----- VAR X_3                 .           226.0000        +INF             .          
----- VAR X_4                 .            18.4375        +INF             .          
----- VAR X_5                 .           331.5625        +INF             .          
----- VAR X_6                 .              .            +INF             .          
----- VAR BENEFICIOS        -INF        13199.3750        +INF             .          
----- VAR INGRESOS          -INF        82080.0000        +INF             .          
----- VAR COSTES_PR~        -INF        66000.6250        +INF             .          
----- VAR COSTES_RE~        -INF         2880.0000        +INF             .          
----- VAR PRODUCTO          -INF          547.2000        +INF             .          
----- VAR PRODUCTO_~        -INF          576.0000        +INF             .          
+---- VAR X1                  .              .            +INF     
+---- VAR X2                  .              .            +INF     
+---- VAR X3                  .           214.7000        +INF      
+---- VAR X4                  .            17.5156        +INF       
+---- VAR X5                  .           314.9844        +INF       
+---- VAR X6                  .              .            +INF          
+---- VAR X_1                 .              .            +INF      
+---- VAR X_2                 .              .            +INF          
+---- VAR X_3                 .           226.0000        +INF           
+---- VAR X_4                 .            18.4375        +INF         
+---- VAR X_5                 .           331.5625        +INF         
+---- VAR X_6                 .              .            +INF    
+---- VAR BENEFICIOS        -INF        13199.3750        +INF            
+---- VAR INGRESOS          -INF        82080.0000        +INF               
+---- VAR COSTES_PR~        -INF        66000.6250        +INF               
+---- VAR COSTES_RE~        -INF         2880.0000        +INF               
+---- VAR PRODUCTO          -INF          547.2000        +INF              
+---- VAR PRODUCTO_~        -INF          576.0000        +INF                 
 \end{verbatim}
 
 Es decir, tenemos una producción de 547.20 toneladas refinadas, de las cuales 214.7 corresponden con el aceite VEG3, 17.5156 corresponden al aceite OIL1 y 314.9844 con el aceite OIL2. Obtenemos un beneficio de 13199.38 euros.\\
@@ -247,26 +239,26 @@ Es decir, tenemos una producción de 547.20 toneladas refinadas, de las cuales 2
 Si aumentamos en una tonelada la capacidad de refinado del aceite de origen animal, se obtiene la siguiente salida de GAMS:
 
 \begin{verbatim}
-                           LOWER          LEVEL          UPPER         MARGINAL
+                           LOWER          LEVEL          UPPER        
 
----- VAR X1                  .              .            +INF           -2.5658      
----- VAR X2                  .              .            +INF           -2.5000      
----- VAR X3                  .           213.7500        +INF             .          
----- VAR X4                  .            16.8328        +INF             .          
----- VAR X5                  .           316.6172        +INF             .          
----- VAR X6                  .              .            +INF           -0.4605      
----- VAR X_1                 .              .            +INF             .          
----- VAR X_2                 .              .            +INF             .          
----- VAR X_3                 .           225.0000        +INF             .          
----- VAR X_4                 .            17.7188        +INF             .          
----- VAR X_5                 .           333.2812        +INF             .          
----- VAR X_6                 .              .            +INF             .          
----- VAR BENEFICIOS        -INF        13204.6875        +INF             .          
----- VAR INGRESOS          -INF        82080.0000        +INF             .          
----- VAR COSTES_PR~        -INF        65995.3125        +INF             .          
----- VAR COSTES_RE~        -INF         2880.0000        +INF             .          
----- VAR PRODUCTO          -INF          547.2000        +INF             .          
----- VAR PRODUCTO_~        -INF          576.0000        +INF             .          
+---- VAR X1                  .              .            +INF          
+---- VAR X2                  .              .            +INF         
+---- VAR X3                  .           213.7500        +INF              
+---- VAR X4                  .            16.8328        +INF               
+---- VAR X5                  .           316.6172        +INF                 
+---- VAR X6                  .              .            +INF         
+---- VAR X_1                 .              .            +INF               
+---- VAR X_2                 .              .            +INF               
+---- VAR X_3                 .           225.0000        +INF                 
+---- VAR X_4                 .            17.7188        +INF                   
+---- VAR X_5                 .           333.2812        +INF                   
+---- VAR X_6                 .              .            +INF              
+---- VAR BENEFICIOS        -INF        13204.6875        +INF            
+---- VAR INGRESOS          -INF        82080.0000        +INF           
+---- VAR COSTES_PR~        -INF        65995.3125        +INF           
+---- VAR COSTES_RE~        -INF         2880.0000        +INF               
+---- VAR PRODUCTO          -INF          547.2000        +INF                  
+---- VAR PRODUCTO_~        -INF          576.0000        +INF                
 \end{verbatim}
 
 Tenemos que el producto es de 547.20 toneladas, igual que el caso anterior, de las cuales 213.75 toneladas son del aceite VEG3, 16.8328 del aceite OIL1 y 316.6172 del aceite OIL2. Se obtiene un beneficio de 13204.69 euros.\\
@@ -291,7 +283,7 @@ Si nos obligan a comprar un mínimo de 15 toneladas de cada tipo de aceite selec
 15\delta_i \leq \tilde{x}_i \leq 350\delta_i, \quad i =4,5,6
 \end{align*}
 
-Es decir, por un lado, se debe cumplir que la cantidad de aceite debe ser mayor de 15, y por el otro, que sea menor que la cantidad menor que la cantidad que se puede refinar. Además, incluimos a ambos lados la variable binaria para, que en el caso, de que valga 0, automáticamente $\tilde{x}$ valga también 0.\\
+Es decir, por un lado, se debe cumplir que la cantidad de aceite debe ser mayor de 15, y por el otro, que sea menor que la cantidad menor que la cantidad que se puede refinar. Además, incluimos a ambos lados la variable binaria para, que en el caso, de que valga un aceite no se incluya en la mezcla, automáticamente el valor de $\tilde{x}$ sea 0.\\
 
 Si la mezcla final sólo puede tener tres aceites, la restricción queda de la siguiente forma:
 
@@ -331,32 +323,32 @@ El nuevo modelo queda de la siguiente manera:
 Si resolvemos este nuevo modelo con GAMS, se obtiene la siguiente solución:
 
 \begin{verbatim}
-                           LOWER          LEVEL          UPPER         MARGINAL
+                           LOWER          LEVEL          UPPER        
 
----- VAR X1                  .              .            +INF             .          
----- VAR X2                  .              .            +INF             .          
----- VAR X3                  .           213.7500        +INF             .          
----- VAR X4                  .            17.0703        +INF             .          
----- VAR X5                  .           315.4297        +INF             .          
----- VAR X6                  .              .            +INF             .          
----- VAR X_1                 .              .            +INF             .          
----- VAR X_2                 .              .            +INF             .          
----- VAR X_3                 .           225.0000        +INF             .          
----- VAR X_4                 .            17.9688        +INF             .          
----- VAR X_5                 .           332.0312        +INF             .          
----- VAR X_6                 .              .            +INF           -0.4375      
----- VAR BENEFICIOS        -INF        13179.6875        +INF             .          
----- VAR INGRESOS          -INF        81937.5000        +INF             .          
----- VAR COSTES_PR~        -INF        65882.8125        +INF             .          
----- VAR COSTES_RE~        -INF         2875.0000        +INF             .          
----- VAR PRODUCTO          -INF          546.2500        +INF             .          
----- VAR PRODUCTO_~        -INF          575.0000        +INF             .          
----- VAR DELTA1              .              .             1.0000      3881.2500      
----- VAR DELTA2              .              .             1.0000      3895.3125      
----- VAR DELTA3              .             1.0000         1.0000      4429.6875      
----- VAR DELTA4              .             1.0000         1.0000         EPS         
----- VAR DELTA5              .             1.0000         1.0000         EPS         
----- VAR DELTA6              .              .             1.0000         EPS         
+---- VAR X1                  .              .            +INF              
+---- VAR X2                  .              .            +INF               
+---- VAR X3                  .           213.7500        +INF                   
+---- VAR X4                  .            17.0703        +INF                 
+---- VAR X5                  .           315.4297        +INF                
+---- VAR X6                  .              .            +INF                  
+---- VAR X_1                 .              .            +INF                
+---- VAR X_2                 .              .            +INF                 
+---- VAR X_3                 .           225.0000        +INF                  
+---- VAR X_4                 .            17.9688        +INF              
+---- VAR X_5                 .           332.0312        +INF               
+---- VAR X_6                 .              .            +INF         
+---- VAR BENEFICIOS        -INF        13179.6875        +INF               
+---- VAR INGRESOS          -INF        81937.5000        +INF                  
+---- VAR COSTES_PR~        -INF        65882.8125        +INF                    
+---- VAR COSTES_RE~        -INF         2875.0000        +INF                  
+---- VAR PRODUCTO          -INF          546.2500        +INF                 
+---- VAR PRODUCTO_~        -INF          575.0000        +INF               
+---- VAR DELTA1              .              .             1.0000      
+---- VAR DELTA2              .              .             1.0000    
+---- VAR DELTA3              .             1.0000         1.0000    
+---- VAR DELTA4              .             1.0000         1.0000              
+---- VAR DELTA5              .             1.0000         1.0000           
+---- VAR DELTA6              .              .             1.0000           
 \end{verbatim}
 
 En este caso, se obtiene como solución que la cantidad óptima de aceite refinado es de 546.75 toneladas (213.75 de VEG3, 17.0703 de OIL1 y 315.4297 de OIL2), obteniendo unos beneficios de 13179.69 euros (81937.50 euros en ingresos, 65882.81 euros en costes de producción y 2875 euros en costes de refinado).\\
@@ -377,6 +369,8 @@ Comprobemos que si la solución obtenida es óptima. Comprobamos de nuevo el res
  RESOURCE USAGE, LIMIT          0.019      1000.000
  ITERATION COUNT, LIMIT         9    2000000000
 \end{verbatim}
+
+Se tiene, por tanto, que la solución es óptima.
 
 \subsection{Objetivo 4}
 
@@ -431,45 +425,45 @@ Por tanto, el nuevo modelo es el siguiente:
 Resolviendo este modelo con GAMS, se obtiene la siguiente solución:
 
 \begin{verbatim}
-                           LOWER          LEVEL          UPPER         MARGINAL
+                           LOWER          LEVEL          UPPER        
 
----- VAR X1                  .           152.0000        +INF             .          
----- VAR X2                  .              .            +INF             .          
----- VAR X3                  .              .            +INF             .          
----- VAR X4                  .           152.0000        +INF             .          
----- VAR X5                  .           152.0000        +INF             .          
----- VAR X6                  .              .            +INF             .          
----- VAR X_1                 .           160.0000        +INF             .          
----- VAR X_2                 .              .            +INF             .          
----- VAR X_3                 .              .            +INF             .          
----- VAR X_4                 .           160.0000        +INF             .          
----- VAR X_5                 .           160.0000        +INF             .          
----- VAR X_6                 .              .            +INF             .          
----- VAR BENEFICIOS        -INF         8210.0000        +INF             .          
----- VAR INGRESOS          -INF        68400.0000        +INF             .          
----- VAR COSTES_PR~        -INF        55840.0000        +INF             .          
----- VAR COSTES_RE~        -INF         2400.0000        +INF             .          
----- VAR PRODUCTO          -INF          456.0000        +INF             .          
----- VAR PRODUCTO_~        -INF          480.0000        +INF             .          
----- VAR COSTES_AL~        -INF         1950.0000        +INF             .          
----- VAR DELTA1              .             1.0000         1.0000         EPS         
----- VAR DELTA2              .              .             1.0000         EPS         
----- VAR DELTA3              .              .             1.0000         EPS         
----- VAR DELTA4              .             1.0000         1.0000         EPS         
----- VAR DELTA5              .             1.0000         1.0000         EPS         
----- VAR DELTA6              .              .             1.0000         EPS         
----- VAR DELTA_I1            .             1.0000         1.0000      2950.0000      
----- VAR DELTA_I2            .              .             1.0000      2150.0000      
----- VAR DELTA_I3            .              .             1.0000      2950.0000      
----- VAR DELTA_I4            .             1.0000         1.0000      2150.0000      
----- VAR DELTA_I5            .             1.0000         1.0000      3110.0000      
----- VAR DELTA_I6            .              .             1.0000      2950.0000
----- VAR DELTA_II1           .              .             1.0000      1350.0000      
----- VAR DELTA_II2           .              .             1.0000       950.0000      
----- VAR DELTA_II3           .              .             1.0000      1350.0000      
----- VAR DELTA_II4           .              .             1.0000       950.0000      
----- VAR DELTA_II5           .              .             1.0000      1430.0000      
----- VAR DELTA_II6           .              .             1.0000      1350.0000      
+---- VAR X1                  .           152.0000        +INF                
+---- VAR X2                  .              .            +INF                
+---- VAR X3                  .              .            +INF              
+---- VAR X4                  .           152.0000        +INF                  
+---- VAR X5                  .           152.0000        +INF            
+---- VAR X6                  .              .            +INF              
+---- VAR X_1                 .           160.0000        +INF               
+---- VAR X_2                 .              .            +INF              
+---- VAR X_3                 .              .            +INF               
+---- VAR X_4                 .           160.0000        +INF            
+---- VAR X_5                 .           160.0000        +INF                 
+---- VAR X_6                 .              .            +INF                      
+---- VAR BENEFICIOS        -INF         8210.0000        +INF                      
+---- VAR INGRESOS          -INF        68400.0000        +INF                     
+---- VAR COSTES_PR~        -INF        55840.0000        +INF                      
+---- VAR COSTES_RE~        -INF         2400.0000        +INF                      
+---- VAR PRODUCTO          -INF          456.0000        +INF                      
+---- VAR PRODUCTO_~        -INF          480.0000        +INF                      
+---- VAR COSTES_AL~        -INF         1950.0000        +INF                      
+---- VAR DELTA1              .             1.0000         1.0000                  
+---- VAR DELTA2              .              .             1.0000                  
+---- VAR DELTA3              .              .             1.0000                  
+---- VAR DELTA4              .             1.0000         1.0000                  
+---- VAR DELTA5              .             1.0000         1.0000                  
+---- VAR DELTA6              .              .             1.0000                  
+---- VAR DELTA_I1            .             1.0000         1.0000            
+---- VAR DELTA_I2            .              .             1.0000            
+---- VAR DELTA_I3            .              .             1.0000            
+---- VAR DELTA_I4            .             1.0000         1.0000            
+---- VAR DELTA_I5            .             1.0000         1.0000            
+---- VAR DELTA_I6            .              .             1.0000      
+---- VAR DELTA_II1           .              .             1.0000            
+---- VAR DELTA_II2           .              .             1.0000            
+---- VAR DELTA_II3           .              .             1.0000            
+---- VAR DELTA_II4           .              .             1.0000            
+---- VAR DELTA_II5           .              .             1.0000            
+---- VAR DELTA_II6           .              .             1.0000            
 
 \end{verbatim}
 
@@ -500,6 +494,6 @@ De nuevo, tenemos que la solución es óptima.
 
 En este caso práctico, hemos modelado un problema de programación lineal para mezclar distintos tipos de aceites. En primer lugar, hemos realizado un modelo de programación lineal continua, y lo hemos modificado, convirtiéndolo en un modelo de programación lineal entera para hacer frente a las nuevas restricciones a las que nos enfrentábamos.\\
 
-Para resolver los distintos tipos de problemas, hemos usado el software de programación y optimización GAMS. En un primer vistazo, su sintaxis en un poco engorrosa, aunque con un poco de práctica se consigue manejar de forma básica. Tener un dominio avanzado (manejar tablas, sets, parámetros, etc.) requiere bastante más práctica y dedicación que el dominio básico, aunque la gran potencia de cálculo de este software hace que el dominio de estos elementos hace que problemas con muchas dimensiones sean fácilmente manejados cambiando los parámetros adecuados, pudiendo reutilizar modelos de numerosas ocasiones.
+Para resolver los distintos tipos de problemas, hemos usado el software de programación y optimización GAMS. En un primer vistazo, su sintaxis en un poco engorrosa, aunque con un poco de práctica se consigue manejar de forma básica. Tener un dominio avanzado (manejar tablas, sets, parámetros, etc.) requiere bastante más práctica y dedicación que el dominio básico, aunque la gran potencia de cálculo de este software hace que el dominio de estos elementos permite resolver problemas con gran cantidad de dimensiones cambiando los parámetros adecuados, pudiendo reutilizar modelos en numerosas ocasiones.
 
 \end{document}
